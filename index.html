@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElderBridge Support Network – Starter Plan</title>
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-pink: #ff6b9d;
+            --primary-blue: #4da6ff;
+            --primary-green: #6bff9d;
+            --dark-pink: #d44d7a;
+            --dark-blue: #2d7acc;
+            --dark-green: #4dcc7a;
+            --light-pink: #ffb3d1;
+            --light-blue: #b3d9ff;
+            --light-green: #b3ffd1;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --black: #000000;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-pink), var(--primary-blue));
+            color: var(--white);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        header.hide {
+            transform: translateY(-100%);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            animation: pulse 2s infinite;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--light-green);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--light-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" x="0" y="0" fill="%234da6ff" opacity="0.3"/><rect width="50" height="50" x="50" y="50" fill="%234da6ff" opacity="0.3"/><rect width="50" height="50" x="0" y="50" fill="%23ff6b9d" opacity="0.3"/><rect width="50" height="50" x="50" y="0" fill="%23ff6b9d" opacity="0.3"/></svg>');
+            background-size: 100px 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 2rem;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-green);
+            color: var(--dark-gray);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--white);
+            border-color: var(--primary-green);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--white);
+            border-color: var(--white);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--dark-gray);
+        }
+
+        /* About Section */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-gray);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-pink), var(--primary-blue));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+            height: 400px;
+        }
+
+        .about-image svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Mission Section */
+        .mission {
+            background: linear-gradient(135deg, var(--light-pink), var(--light-blue));
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23ffffff" stroke-width="2" fill="none" opacity="0.2"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.1;
+        }
+
+        .mission-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .mission-statement {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .mission-statement::before,
+        .mission-statement::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary-pink);
+            position: absolute;
+            opacity: 0.5;
+        }
+
+        .mission-statement::before {
+            top: -20px;
+            left: 0;
+        }
+
+        .mission-statement::after {
+            bottom: -40px;
+            right: 0;
+        }
+
+        /* Goals Section */
+        .goals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .goal-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-pink), var(--primary-blue));
+        }
+
+        .goal-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+            background-color: var(--light-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-green);
+            font-size: 1.5rem;
+        }
+
+        .goal-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        /* Activities Section */
+        .activities {
+            background-color: var(--white);
+            padding: 5rem 2rem;
+        }
+
+        .activities-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .activity-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .activity-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-pink), var(--primary-blue));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 2rem);
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 2rem);
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-green);
+            border: 4px solid var(--white);
+            box-shadow: 0 0 0 4px var(--primary-green);
+        }
+
+        .timeline-content {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-pink);
+        }
+
+        .timeline-content p {
+            font-size: 1rem;
+        }
+
+        /* Resources Section */
+        .resources {
+            background: linear-gradient(135deg, var(--light-blue), var(--light-green));
+            padding: 5rem 2rem;
+        }
+
+        .resources-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .resource-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .resource-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .resource-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-pink);
+            border-radius: 50%;
+            color: var(--dark-pink);
+            font-size: 2rem;
+        }
+
+        .resource-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        /* Budget Section */
+        .budget {
+            padding: 5rem 2rem;
+            background-color: var(--white);
+        }
+
+        .budget-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3rem auto;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .budget-table th,
+        .budget-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .budget-table th {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .budget-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .budget-table tr:hover {
+            background-color: var(--light-green);
+        }
+
+        .budget-total {
+            font-weight: 700;
+            color: var(--dark-pink);
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--light-green), var(--light-pink));
+        }
+
+        .timeline-section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .month-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .month-item {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .month-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-blue), var(--primary-green));
+        }
+
+        .month-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .month-item ul {
+            margin-left: 1.5rem;
+        }
+
+        .month-item li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background-color: var(--light-gray);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-pink);
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-blue), var(--dark-pink));
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-left: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--light-green);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-green);
+            color: var(--dark-gray);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-image {
+                width: 100%;
+                height: 300px;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-blue);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                gap: 1rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding: 0 0 0 2rem;
+                text-align: left;
+            }
+
+            .activity-timeline::before {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .mission-statement {
+                font-size: 1.2rem;
+                padding: 0 1rem;
+            }
+
+            .goal-card,
+            .resource-card,
+            .month-item {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-container">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 12L12 22L20 12L12 2Z" fill="var(--primary-green)"/>
+                    <path d="M12 6L8 12L12 18L16 12L12 6Z" fill="var(--primary-pink)"/>
+                    <circle cx="12" cy="12" r="3" fill="var(--primary-blue)"/>
+                </svg>
+                <span class="logo-text">ElderBridge</span>
+            </div>
+            <nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <ul id="navMenu">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#mission">Mission</a></li>
+                    <li><a href="#goals">Goals</a></li>
+                    <li><a href="#activities">Activities</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ElderBridge Support Network</h1>
+            <p>Providing companionship, care, and dignity to elderly individuals in our community through meaningful connections and support.</p>
+            <div class="btn-container">
+                <a href="#contact" class="btn">Join Our Mission</a>
+                <a href="#about" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="section-title">
+            <h2>About Us</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Bridging the Gap for Elderly Care</h3>
+                <p>ElderBridge Support Network is a community-driven initiative dedicated to improving the lives of elderly individuals who often find themselves isolated or without adequate support systems.</p>
+                <p>Our organization recognizes the growing need for compassionate care and companionship for seniors, particularly those living alone or with limited family or financial resources.</p>
+                <p>Through our Starter Plan, we aim to establish a foundation of support that can grow and adapt to meet the diverse needs of our elderly community members.</p>
+                <a href="#mission" class="btn" style="margin-top: 1rem;">Our Mission</a>
+            </div>
+            <div class="about-image">
+                <svg viewBox="0 0 500 400" xmlns="images/photo.png">
+                    <rect x="50" y="100" width="400" height="250" rx="20" fill="var(--light-blue)"/>
+                    <circle cx="150" cy="120" r="60" fill="var(--primary-pink)"/>
+                    <circle cx="350" cy="120" r="60" fill="var(--primary-blue)"/>
+                    <path d="M100 200L150 250L200 200" stroke="var(--dark-gray)" stroke-width="3" fill="none"/>
+                    <path d="M300 200L350 250L400 200" stroke="var(--dark-gray)" stroke-width="3" fill="none"/>
+                    <rect x="100" y="300" width="100" height="30" rx="5" fill="var(--primary-green)"/>
+                    <rect x="300" y="300" width="100" height="30" rx="5" fill="var(--primary-green)"/>
+                    <path d="M250 100L250 150" stroke="var(--dark-pink)" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="250" cy="170" r="20" fill="var(--primary-green)"/>
+                    <path d="M200 350L300 350" stroke="var(--dark-gray)" stroke-width="2" stroke-dasharray="5,5"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission" id="mission">
+        <div class="mission-container">
+            <div class="section-title">
+                <h2 style="color: var(--white);">Our Mission</h2>
+            </div>
+            <p class="mission-statement">To provide companionship, care, and dignity to elderly people in our community by bridging the gap between their needs and the support they deserve.</p>
+            <a href="#goals" class="btn">Our Goals</a>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section class="section" id="goals">
+        <div class="section-title">
+            <h2>Our Goals</h2>
+        </div>
+        <div class="goals-container">
+            <div class="goal-card">
+                <div class="goal-icon">✓</div>
+                <h3>Weekly Visits</h3>
+                <p>Visit at least 3 elderly individuals weekly to provide companionship and check on their well-being.</p>
+            </div>
+            <div class="goal-card">
+                <div class="goal-icon">❤️</div>
+                <h3>Emotional Support</h3>
+                <p>Offer meaningful companionship and emotional support to combat loneliness and isolation.</p>
+            </div>
+            <div class="goal-card">
+                <div class="goal-icon">🎁</div>
+                <h3>Care Packages</h3>
+                <p>Deliver small care packages with essential items to show we care and meet practical needs.</p>
+            </div>
+            <div class="goal-card">
+                <div class="goal-icon">👥</div>
+                <h3>Volunteer Network</h3>
+                <p>Recruit and train volunteers to expand our reach and ensure program sustainability.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section class="activities" id="activities">
+        <div class="activities-container">
+            <div class="section-title">
+                <h2>Our Activities</h2>
+            </div>
+            <div class="activity-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Community Outreach</h3>
+                        <p>Identify vulnerable elders through churches, community leaders, and word-of-mouth referrals to ensure we reach those most in need.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Home Visits</h3>
+                        <p>Conduct regular home visits to provide companionship, assess needs, and offer assistance with daily tasks when appropriate.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Care Kits</h3>
+                        <p>Prepare and distribute small care kits containing fruit, snacks, hygiene products, and other essentials to our elderly friends.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Story Sharing</h3>
+                        <p>Collect and share stories from our elderly participants to inspire community respect and involvement in elder care.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Progress Tracking</h3>
+                        <p>Maintain detailed visit logs to track elder well-being, identify trends, and measure the impact of our program.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources" id="resources">
+        <div class="resources-container">
+            <div class="section-title">
+                <h2>Resources Needed</h2>
+            </div>
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon">🛍️</div>
+                    <h3>Care Items</h3>
+                    <p>Basic necessities like soap, fruit, snacks, and other daily essentials for our care packages.</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🖨️</div>
+                    <h3>Printing Materials</h3>
+                    <p>Flyers, cards, and informational materials to spread awareness and document our work.</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🚗</div>
+                    <h3>Transportation</h3>
+                    <p>Resources for transportation or mapped walking routes to reach our elderly participants.</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">👋</div>
+                    <h3>Volunteers</h3>
+                    <p>Compassionate individuals willing to donate their time to visit and support elders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Section -->
+    <section class="budget">
+        <div class="budget-container">
+            <div class="section-title">
+                <h2>Budget Estimate</h2>
+            </div>
+            <p style="text-align: center; margin-bottom: 2rem;">Our modest budget for the first 3 months demonstrates how small contributions can make a big difference.</p>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Cost Estimate (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Care kits</td>
+                        <td>$30–60</td>
+                    </tr>
+                    <tr>
+                        <td>Printing flyers/cards</td>
+                        <td>$10</td>
+                    </tr>
+                    <tr>
+                        <td>Volunteer support (training/snacks)</td>
+                        <td>$10</td>
+                    </tr>
+                    <tr>
+                        <td>Miscellaneous</td>
+                        <td>$10</td>
+                    </tr>
+                    <tr class="budget-total">
+                        <td>Total Estimated</td>
+                        <td>$90 or less</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="timeline-section-container">
+            <div class="section-title">
+                <h2>3-Month Timeline</h2>
+            </div>
+            <div class="month-timeline">
+                <div class="month-item">
+                    <h3>Month 1: Foundation</h3>
+                    <ul>
+                        <li>Recruit and train initial volunteers</li>
+                        <li>Identify elders in need through community networks</li>
+                        <li>Develop visit schedules and routes</li>
+                        <li>Create basic care package templates</li>
+                    </ul>
+                </div>
+                <div class="month-item">
+                    <h3>Month 2: Implementation</h3>
+                    <ul>
+                        <li>Begin weekly visits to established participants</li>
+                        <li>Deliver first round of care kits</li>
+                        <li>Establish visit log system</li>
+                        <li>Gather initial feedback and stories</li>
+                    </ul>
+                </div>
+                <div class="month-item">
+                    <h3>Month 3: Expansion</h3>
+                    <ul>
+                        <li>Assess program impact and participant well-being</li>
+                        <li>Expand to additional elders as capacity allows</li>
+                        <li>Share stories to inspire community involvement</li>
+                        <li>Plan for future growth and sustainability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get Involved</h3>
+                <p>Whether you'd like to volunteer, donate resources, or simply learn more about our work, we'd love to hear from you.</p>
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <div class="contact-icon">✉️</div>
+                        <span>info@elderbridge.org</span>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">📞</div>
+                        <span>(555) 123-4567</span>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">📍</div>
+                        <span>123 Care Street, Community City</span>
+                    </div>
+                </div>
+                <div class="volunteer-cta">
+                    <h4>Volunteer Opportunities</h4>
+                    <p>We're always looking for compassionate individuals to join our visiting team. No special skills required - just a caring heart and willingness to listen.</p>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <svg class="footer-logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4 12L12 22L20 12L12 2Z" fill="var(--primary-green)"/>
+                    <path d="M12 6L8 12L12 18L16 12L12 6Z" fill="var(--primary-pink)"/>
+                    <circle cx="12" cy="12" r="3" fill="var(--primary-blue)"/>
+                </svg>
+                <span class="footer-logo-text">ElderBridge</span>
+            </div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#mission">Mission</a>
+                <a href="#goals">Goals</a>
+                <a href="#activities">Activities</a>
+                <a href="#resources">Resources</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">f</a>
+                <a href="#" class="social-link">in</a>
+                <a href="#" class="social-link">t</a>
+                <a href="#" class="social-link">ig</a>
+            </div>
+            <p class="copyright">© 2023 ElderBridge Support Network. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                }
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header Hide/Show on Scroll
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                header.classList.remove('hide');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !header.classList.contains('hide')) {
+                // Scroll down
+                header.classList.add('hide');
+            } else if (currentScroll < lastScroll && header.classList.contains('hide')) {
+                // Scroll up
+                header.classList.remove('hide');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Animation on Scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.goal-card, .resource-card, .month-item, .timeline-content');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animated elements
+        document.querySelectorAll('.goal-card, .resource-card, .month-item, .timeline-content').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            // For this example, we'll just show an alert
+            alert(`Thank you, ${name}! Your message has been received. We'll contact you at ${email} soon.`);
+            
+            // Reset the form
+            contactForm.reset();
+        });
+
+        // Floating animation for decorative elements
+        const floatElements = document.querySelectorAll('.goal-icon, .resource-icon');
+        
+        floatElements.forEach((element, index) => {
+            element.style.animation = `float 3s ease-in-out ${index * 0.2}s infinite`;
+        });
+
+        // Interactive SVG animation
+        const aboutImage = document.querySelector('.about-image svg');
+        const paths = aboutImage.querySelectorAll('path, circle, rect');
+        
+        aboutImage.addEventListener('mouseover', () => {
+            paths.forEach(path => {
+                const randomColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                path.style.transition = 'fill 0.5s ease';
+                path.style.fill = randomColor;
+            });
+        });
+        
+        aboutImage.addEventListener('mouseout', () => {
+            paths.forEach(path => {
+                path.style.fill = '';
+            });
+        });
+    </script>
+</body>
+</html>
